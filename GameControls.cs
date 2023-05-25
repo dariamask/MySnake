@@ -17,11 +17,14 @@ namespace MySnake
 
         internal static void IsGameOver(Snake snake)
         {
-            if (snake.Head.X == 1 || snake.Head.X == 30 ||
-                snake.Head.Y == 2 || snake.Head.Y == 31)
+            // Тут не замечание, просто пример
+            // GameOver = (snake.Head.X is 1 or 30 || snake.Head.Y is 2 or 31) ||
+            //            snake.Body.Any(b => b.X == snake.Head.X && b.Y == snake.Head.Y);
+
+            if (snake.Head.X is 1 or 30 ||
+                snake.Head.Y is 2 or 31)
             {
                 GameOver = true;
-
             }
             if (snake.Body.Any(b => b.X == snake.Head.X && b.Y == snake.Head.Y))
             {
@@ -46,15 +49,19 @@ namespace MySnake
         internal static void StartMenu(Snake snake)
         {
             Console.Clear();
+            
+            // Зачем вызывать свойства класса через его имя?
             GameControls.GameOver = false;
             GameControls.Score = 0;
 
+            // меню можно инициализировать при объявлении
             Menu = new string[] { "Начать игру", "Выйти из игры" };
 
             DisplayMenu();
 
-            while (GameOver == false)
+            while (!GameOver)
             {
+                // Зачем нужен объект змеи для отрисовки меню?
                 ChooseMainMenuItem(snake);
                 LightUpMenuItem(snake);
             }
@@ -68,6 +75,8 @@ namespace MySnake
                 Console.WriteLine($"{Menu[i]}");
             }
         }
+
+        // Console.Clear() ?
         internal static void ClearMenu()
         {
             Console.ForegroundColor = ConsoleColor.Black;
@@ -80,6 +89,7 @@ namespace MySnake
         }
         internal static void LightUpMenuItem(Snake snake)
         {
+            // !GameOver
             if (GameOver == false)
             {
                 for (int i = 0; i < Menu.Length; i++)
@@ -154,23 +164,22 @@ namespace MySnake
             snake.SnakeBuilder();
             Food food = new Food();
 
-            while (GameControls.GameOver == false)
+            while (!GameOver)
             {
-                GameControls.ScoreDisplay();
+                // Зачем рисовать на каждый шаг змеи?
+                ScoreDisplay();
 
                 Thread.Sleep(50);
                 snake.ReadInput();
-                food.Omnomnom(snake);
+                food.Omnomnom(snake); //еда.ест(змею)
                 food.Spawn(snake);
+
+                // Почему движение змеи разбито на три метода?
                 snake.Clear();
                 snake.Move(snake.Direction);
                 snake.Head.Print();
-                GameControls.IsGameOver(snake);
 
-                if (GameControls.GameOver == true)
-                {
-                    break;
-                }
+                GameControls.IsGameOver(snake);
             }
         }
     }
