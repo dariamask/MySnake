@@ -9,12 +9,15 @@ namespace MySnake
     internal class Food
     {
         internal Point TastyFood { get; set; }
+        // Много вопросов к этой переменной, выглядит ненужной
         internal bool WasEaten { get; set; }
+        
         public Food ()
         {
             TastyFood = new Point ();  
             TastyFood.Symbol = 'O';
             TastyFood.Color = ConsoleColor.Yellow;
+            // Инициализируем true чтобы в методе Spawn() это проверить, зачем?
             WasEaten = true;
             Spawn();
         }
@@ -49,8 +52,11 @@ namespace MySnake
                 WasEaten=false;
             }
         }
+
+        // Зачем нужны два примерно одинаковых метода, это все можно сделать в одном
         internal void Spawn()
         {
+            //?
             if (WasEaten == true)
             {
                 Random randomX = new Random();
@@ -74,6 +80,7 @@ namespace MySnake
             }
             else
             {
+                // Зачем перезаписывать эту переменную каждый ход?
                 WasEaten = false;
             }
         }

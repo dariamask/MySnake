@@ -18,6 +18,8 @@ namespace MySnake
             X = x;
             Y = y;
         }
+
+        // ?
         public override bool Equals(object o) =>
             o.ToString() == this.ToString();
         internal void Print()

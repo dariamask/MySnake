@@ -10,6 +10,7 @@ namespace MySnake
 
             while (true)
             {
+                // Зачем здесь создается объект snake?  
                 Snake snake = new Snake();
 
                 GameControls.StartMenu(snake);
